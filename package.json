@@ -18,7 +18,7 @@
     "lint-android": "./android/gradlew -p android spotlessCheck -q",
     "lint": "yarn lint-js && yarn lint-android",
     "release": "yarn prepare && npm login && release-it",
-    "prepare": "bob build && husky install",
+    "prepare": "",
     "architectures-consistency-check": "node ./scripts/codegen-check-consistency.js",
     "sync-architectures": "node ./scripts/codegen-sync-archs.js"
   },
