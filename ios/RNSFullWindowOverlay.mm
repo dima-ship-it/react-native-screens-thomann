@@ -17,7 +17,9 @@
 
 @implementation RNSFullWindowOverlayContainer
 
-- (instancetype)initWithFrame:(CGRect)frame accessibilityViewIsModal:(BOOL)accessibilityViewIsModal
+- (instancetype)initWithFrame:(CGRect)frame
+     accessibilityViewIsModal:(BOOL)accessibilityViewIsModal
+         accessibilityEnabled:(BOOL)accessibilityEnabled
 {
   if (self = [super initWithFrame:frame]) {
     self.accessibilityViewIsModal = accessibilityViewIsModal;
@@ -133,6 +135,7 @@
 {
   // Default value used by container.
   _accessibilityContainerViewIsModal = YES;
+  _accessibilityEnabled = YES;
   _reactFrame = CGRectNull;
   _container = self.container;
   [self show];
@@ -144,6 +147,12 @@
   self.container.accessibilityViewIsModal = accessibilityContainerViewIsModal;
 }
 
+- (void)setAccessibilityEnabled:(BOOL)accessibilityEnabled
+{
+  _accessibilityEnabled = accessibilityEnabled;
+  self.container.accessibilityEnabled = accessibilityEnabled;
+}
+
 - (void)addSubview:(UIView *)view
 {
   [_container addSubview:view];
@@ -153,7 +162,8 @@
 {
   if (_container == nil) {
     _container = [[RNSFullWindowOverlayContainer alloc] initWithFrame:_reactFrame
-                                             accessibilityViewIsModal:_accessibilityContainerViewIsModal];
+                                             accessibilityViewIsModal:_accessibilityContainerViewIsModal
+                                                 accessibilityEnabled:_accessibilityEnabled];
   }
 
   return _container;
