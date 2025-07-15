@@ -19,6 +19,7 @@
     "lint": "yarn lint-js && yarn lint-android",
     "release": "yarn prepare && npm login && release-it",
     "prepare": "",
+    "prepare-locally": "bob build && husky install",
     "architectures-consistency-check": "node ./scripts/codegen-check-consistency.js",
     "sync-architectures": "node ./scripts/codegen-sync-archs.js"
   },

@@ -21,16 +21,16 @@
 {
   if (self = [super initWithFrame:frame]) {
     self.accessibilityViewIsModal = accessibilityViewIsModal;
-    self.accessibilityEnabled = NO; // default to off unless explicitly enabled
-    [self updateAccessibility];
+    // Don't set accessibilityEnabled here!
+    // Just leave it at its default (false) — RN will call the setter shortly after.
   }
   return self;
 }
 
 - (void)setAccessibilityEnabled:(BOOL)enabled
 {
-    NSLog(@"[RNSFullWindowOverlay] setAccessibilityEnabled called: %d", enabled);
-    self.accessibilityEnabled = enabled;
+  NSLog(@"[RNSFullWindowOverlay] setAccessibilityEnabled called: %d", enabled);
+  _accessibilityEnabled = enabled;
   [self updateAccessibility];
 }
 
@@ -40,6 +40,7 @@
     self.accessibilityElementsHidden = NO;
     self.isAccessibilityElement = NO;
   } else {
+    NSLog(@"Hi bob");
     self.accessibilityElementsHidden = YES;
     self.isAccessibilityElement = NO;
   }
@@ -257,10 +258,10 @@ RNS_IGNORE_SUPER_CALL_END
   if (newComponentProps.accessibilityContainerViewIsModal != oldComponentProps.accessibilityContainerViewIsModal) {
     [self setAccessibilityContainerViewIsModal:newComponentProps.accessibilityContainerViewIsModal];
   }
-    
-    if (newComponentProps.accessibilityEnabled != oldComponentProps.accessibilityEnabled) {
-      [self setAccessibilityEnabled:newComponentProps.accessibilityEnabled];
-    }
+
+  if (newComponentProps.accessibilityEnabled != oldComponentProps.accessibilityEnabled) {
+    [self setAccessibilityEnabled:newComponentProps.accessibilityEnabled];
+  }
 
   [super updateProps:props oldProps:oldProps];
 }
@@ -296,7 +297,12 @@ Class<RCTComponentViewProtocol> RNSFullWindowOverlayCls(void)
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_VIEW_PROPERTY(accessibilityContainerViewIsModal, BOOL)
-RCT_EXPORT_VIEW_PROPERTY(accessibilityEnabled, BOOL)
+RCT_CUSTOM_VIEW_PROPERTY(accessibilityEnabled, BOOL, RNSFullWindowOverlay)
+{
+  BOOL value = [RCTConvert BOOL:json];
+  NSLog(@"[RNSFullWindowOverlayManager] accessibilityEnabled = %d", value);
+  view.accessibilityEnabled = value;
+}
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #else
