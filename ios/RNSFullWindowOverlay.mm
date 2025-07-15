@@ -21,8 +21,28 @@
 {
   if (self = [super initWithFrame:frame]) {
     self.accessibilityViewIsModal = accessibilityViewIsModal;
+    self.accessibilityEnabled = NO; // default to off unless explicitly enabled
+    [self updateAccessibility];
   }
   return self;
+}
+
+- (void)setAccessibilityEnabled:(BOOL)enabled
+{
+    NSLog(@"[RNSFullWindowOverlay] setAccessibilityEnabled called: %d", enabled);
+    self.accessibilityEnabled = enabled;
+  [self updateAccessibility];
+}
+
+- (void)updateAccessibility
+{
+  if (self.accessibilityEnabled) {
+    self.accessibilityElementsHidden = NO;
+    self.isAccessibilityElement = NO;
+  } else {
+    self.accessibilityElementsHidden = YES;
+    self.isAccessibilityElement = NO;
+  }
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
@@ -237,6 +257,10 @@ RNS_IGNORE_SUPER_CALL_END
   if (newComponentProps.accessibilityContainerViewIsModal != oldComponentProps.accessibilityContainerViewIsModal) {
     [self setAccessibilityContainerViewIsModal:newComponentProps.accessibilityContainerViewIsModal];
   }
+    
+    if (newComponentProps.accessibilityEnabled != oldComponentProps.accessibilityEnabled) {
+      [self setAccessibilityEnabled:newComponentProps.accessibilityEnabled];
+    }
 
   [super updateProps:props oldProps:oldProps];
 }
@@ -272,6 +296,7 @@ Class<RCTComponentViewProtocol> RNSFullWindowOverlayCls(void)
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_VIEW_PROPERTY(accessibilityContainerViewIsModal, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(accessibilityEnabled, BOOL)
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #else

@@ -16,12 +16,13 @@ const NativeFullWindowOverlay: React.ComponentType<
   PropsWithChildren<{
     style: StyleProp<ViewStyle>;
   }> &
-    NativeProps
+  NativeProps
 > = FullWindowOverlayNativeComponent as any;
 
 type FullWindowOverlayProps = {
   children: ReactNode;
   unstable_accessibilityContainerViewIsModal?: boolean;
+  accessibilityEnabled?: boolean;
 };
 
 function FullWindowOverlay(props: FullWindowOverlayProps) {
@@ -33,6 +34,7 @@ function FullWindowOverlay(props: FullWindowOverlayProps) {
   return (
     <NativeFullWindowOverlay
       style={[StyleSheet.absoluteFill, { width, height }]}
+      accessibilityEnabled={props.accessibilityEnabled}
       accessibilityContainerViewIsModal={
         props.unstable_accessibilityContainerViewIsModal
       }>

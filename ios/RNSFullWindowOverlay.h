@@ -16,6 +16,7 @@ namespace react = facebook::react;
 @end
 
 @interface RNSFullWindowOverlayContainer : UIView
+@property (nonatomic, assign) BOOL accessibilityEnabled;
 
 @end
 
@@ -27,6 +28,7 @@ namespace react = facebook::react;
 #endif // RCT_NEW_ARCH_ENABLED
 
 @property (nonatomic) BOOL accessibilityContainerViewIsModal;
+@property (nonatomic, assign) BOOL accessibilityEnabled;
 
 #ifdef RCT_NEW_ARCH_ENABLED
 @property (nonatomic) react::LayoutMetrics oldLayoutMetrics;
