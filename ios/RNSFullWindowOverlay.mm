@@ -24,14 +24,13 @@
   if (self = [super initWithFrame:frame]) {
     self.accessibilityViewIsModal = accessibilityViewIsModal;
     // Don't set accessibilityEnabled here!
-    // Just leave it at its default (false) — RN will call the setter shortly after.
+    // Just leave it at its default (true) — RN will call the setter shortly after.
   }
   return self;
 }
 
 - (void)setAccessibilityEnabled:(BOOL)enabled
 {
-  NSLog(@"[RNSFullWindowOverlay] setAccessibilityEnabled called: %d", enabled);
   _accessibilityEnabled = enabled;
   [self updateAccessibility];
 }
@@ -42,7 +41,6 @@
     self.accessibilityElementsHidden = NO;
     self.isAccessibilityElement = NO;
   } else {
-    NSLog(@"Hi bob");
     self.accessibilityElementsHidden = YES;
     self.isAccessibilityElement = NO;
   }
@@ -310,7 +308,6 @@ RCT_EXPORT_VIEW_PROPERTY(accessibilityContainerViewIsModal, BOOL)
 RCT_CUSTOM_VIEW_PROPERTY(accessibilityEnabled, BOOL, RNSFullWindowOverlay)
 {
   BOOL value = [RCTConvert BOOL:json];
-  NSLog(@"[RNSFullWindowOverlayManager] accessibilityEnabled = %d", value);
   view.accessibilityEnabled = value;
 }
 

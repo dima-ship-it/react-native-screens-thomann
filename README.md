@@ -8,6 +8,7 @@ The reason for that is that we had to introduce FullScreenOverlay from react-nat
 
 ### How we fix it
 - We add a new prop called `accessibilityEnabled`
+- The prop is set to TRUE by default. This is required because if you set it to FALSE, RN will not call it. You need to send the value as FALSE from RN side. 
 - We use the prop in FullScreenOverlay to enable or disable the accessibility
 - Core idea: 
     - When no full screen overlay is necessary, `accessibilityEnabled` is false. This tells the OS to ignore it (it's not visible anyway). 

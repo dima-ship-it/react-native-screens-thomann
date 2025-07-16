@@ -1,6 +1,6 @@
 {
   "name": "react-native-screens",
-  "version": "4.11.1-thomann.5",
+  "version": "4.11.1-thomann.6",
   "description": "Native navigation primitives for your React Native app.",
   "scripts": {
     "submodules": "git submodule update --init --recursive && (cd react-navigation && yarn && yarn build && cd ../)",
