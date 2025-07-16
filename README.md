@@ -1,3 +1,33 @@
+# This is a Fork for Thomann
+In order to fix a problem with Accessibility / VoiceOver, this project was forked and patched. 
+
+## Bug we are fixing
+The problem that we are fixing is that dialogues or snackbars appeared behind Modals after switching to native-navigation. After a fix for that, VoiceOver became broken for the whole app. 
+
+The reason for that is that we had to introduce FullScreenOverlay from react-native-screens which is shown on every screen (due to the fact that bottom sheets / snackbars are used on almost every screen)
+
+### How we fix it
+- We add a new prop called `accessibilityEnabled`
+- We use the prop in FullScreenOverlay to enable or disable the accessibility
+- Core idea: 
+    - When no full screen overlay is necessary, `accessibilityEnabled` is false. This tells the OS to ignore it (it's not visible anyway). 
+    - When full screen overlay is necessary (e.g. when you show a dialogue) then `accessibilityEnabled` is true. 
+    
+## Contribution and Integration
+- If you need to contribute or make changes: 
+    - Clone the library on your machine
+    - Make the changes
+    - Increase the version in package.json 
+    - Run `yarn prepare-locally`
+    - Commit *all* the changes & push them (important: `yarn prepare-locally` will generate/modify `lib` folder --> you NEED to push it too)
+    - Create a tag that matches the version in package.json, e.g. `git tag 4.11.1-thomann.4`
+    - Push a tag `git push origin 4.11.1-thomann.4`
+    - Finally you can integrate the new version into the app (see below)
+- You can integrate the library like this:  
+`"react-native-screens": "git+https://github.com/dima-ship-it/react-native-screens-thomann.git#4.11.1-thomann.4"`
+^the last parameter is the new tag that you created. 
+- Run `yarn purge` and you should be good to go! 🚀
+
 <img src="https://user-images.githubusercontent.com/16062886/117443651-c13d9500-af38-11eb-888d-b6a0b580760c.png" width="100%" alt="React Native Screens by Software Mansion" >
 
 This project aims to expose native navigation container components to React Native. It is not designed to be used as a standalone library but rather as a dependency of a [full-featured navigation library](https://github.com/react-navigation/react-navigation).
